@@ -1,5 +1,5 @@
 import React, { useState,
-  //  useEffect 
+   useEffect 
   } from "react";
 import { Button, Tooltip, Popover } from "antd";
 import { AppstoreAddOutlined } from "@ant-design/icons";
@@ -15,20 +15,29 @@ const content = (
 
 function BoardStation() {
 
+  // const boardsFromStorage = JSON.parse(localStorage.getItem("BOARDS"))
   const [ redirection,setRedirection] = useState(false);
 
   const dispatch = useDispatch();
-  dispatch({type:'ADD_BOARD'},[dispatch]);
+
   const boardsArr = useSelector(state => state.BoardReducer.boardsArray);
 
   const [boardsArray, setBoardsArray] = useState(boardsArr);
 
+  // useEffect(()=>{dispatch({type:"SET_BOARD"})},[]);//did mount 
+  useEffect(()=>{setBoardsArray(boardsArr)},[boardsArr])
+
+  // setBoardsArray(
+
+    // )
+
+
   
   // console.log("boardsArr",boardsArr);
   // useEffect(()=>{setBoardsArray(boardsArr)},[boardsArr]) // why is this not working 
-  console.log(boardsArray);
+  console.log("board from reducers state",boardsArr);
 
-  localStorage.setItem("BOARDS",JSON.stringify(boardsArray));
+  // localStorage.setItem("BOARDS",JSON.stringify(boardsArray));
 
   // wrong boardsArray.push({title:"Default Board",description:""});
   // setBoardsArray( [...boardsArray, {
@@ -36,16 +45,14 @@ function BoardStation() {
   //   description: ""
   // } ] );
 
+
   const addBoard = (title, description) => {
-    
-    setBoardsArray([
-      ...boardsArray,
-      {
-        title,
-        description,
-        stages:[]
-      }
-    ]);
+    dispatch({type:'ADD_BOARD',payload:{
+      title,
+      description,
+      stages:[]
+    }},[dispatch]);
+    // setBoardsArray();
   };
 
   const handleCreateBoard =(title,description)=>{
