@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,
+  //  useEffect 
+  } from "react";
 import { Button, Tooltip, Popover } from "antd";
 import { AppstoreAddOutlined } from "@ant-design/icons";
 import CreateBoard from "./apis/createBoard";
@@ -15,12 +17,18 @@ function BoardStation() {
 
   const [ redirection,setRedirection] = useState(false);
 
-  const [boardsArray, setBoardsArray] = useState();
-
   const dispatch = useDispatch();
   dispatch({type:'ADD_BOARD'},[dispatch]);
+  const boardsArr = useSelector(state => state.BoardReducer.boardsArray);
 
-localStorage.setItem("BOARDS",JSON.stringify(boardsArray));
+  const [boardsArray, setBoardsArray] = useState(boardsArr);
+
+  
+  // console.log("boardsArr",boardsArr);
+  // useEffect(()=>{setBoardsArray(boardsArr)},[boardsArr]) // why is this not working 
+  console.log(boardsArray);
+
+  localStorage.setItem("BOARDS",JSON.stringify(boardsArray));
 
   // wrong boardsArray.push({title:"Default Board",description:""});
   // setBoardsArray( [...boardsArray, {
